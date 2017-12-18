@@ -1,0 +1,14 @@
+{% extends 'blog/header.html' %}
+
+{% block title %}List of blog posts{% endblock %}
+
+{% block content %}
+	{% for posts in post %}
+		<h2>{{ posts.title }}</h2>
+		<p>Written by {{ posts.author }} on {{ posts.published }} in <a href="http://127.0.0.1:8000/category/{{posts.category.slug}}/">{{ posts.category }}</a></p>
+		<p>Last updated on {{ posts.updated }}</p>
+		<p>{{ seo_description|safe|linebreaks }}</p>
+		<p><a href="{{ posts.get_absolute_url }}">Go to post</a></p>
+		<hr>
+	{% endfor %} 
+{% endblock %}

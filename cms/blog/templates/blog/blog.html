@@ -1,0 +1,29 @@
+{% extends 'blog/header.html' %}
+
+{% block title %}{{ post.seo_title }}}{% endblock %}
+
+{% block content %}
+	<h2>{{ post.title }}</h2>
+	<p>Written by {{ post.author }} on {{ post.published }}</p>
+	<p>Last updated on {{ post.updated }}</p>
+	<hr>
+	{{ post.content|safe|linebreaks }}
+	<hr>
+	<h1>Comments</h1>
+	<p>Total number of coments {{ post.comments.count }}</p>
+	{% if user.is_authenticated %}
+		<a href="{% url 'blog:add_comment' slug=post.slug %}">Leave a Comment</a>
+	{% else %}
+		<p>Leave a Comment(Note: You must first login)</p>
+	{% endif %}
+	<hr>
+	{% for comment in post.comments.all %}
+		<p>{{ comment.created }}</p>
+		<p>{{ comment.user }}</p>
+		<p>{{ comment.body }}</p>
+		<hr>
+	{% empty %}
+		<p>There are no comments</p>
+	{% endfor %}
+
+{% endblock %}
